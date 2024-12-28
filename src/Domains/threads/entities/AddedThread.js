@@ -20,4 +20,4 @@ class AddedThread {
       }
   }
    
-  module.exports = AddedThread;
+module.exports = AddedThread;

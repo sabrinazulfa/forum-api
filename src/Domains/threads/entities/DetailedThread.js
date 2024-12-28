@@ -23,4 +23,4 @@ class DetailedThread {
       }
   }
    
-  module.exports = DetailedThread;
+module.exports = DetailedThread;
