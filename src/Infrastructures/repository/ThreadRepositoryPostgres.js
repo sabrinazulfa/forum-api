@@ -28,19 +28,6 @@ class ThreadRepositoryPostgres extends ThreadRepository {
      });
   }
 
-  async checkThread(id) {
-    const query = {
-      text: 'SELECT * FROM threads WHERE id = $1',
-      values: [id],
-    };
-
-    const result = await this._pool.query(query);
-
-    if (result.rowCount) {
-      throw new NotFoundError('thread tidak ada');
-    }
-  }
-
   async getThreadById(id) {
     const query = {
       text: `SELECT threads.id, threads.title, threads.body, threads.date, users.username
@@ -57,6 +44,19 @@ class ThreadRepositoryPostgres extends ThreadRepository {
     }
 
     return result.rows[0];
+  }
+  
+  async checkAvailableThread(id) {
+    const query = {
+      text: 'SELECT * FROM threads WHERE id = $1',
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (result.rowCount) {
+      throw new NotFoundError('thread tidak ada');
+    }
   }
 }
 

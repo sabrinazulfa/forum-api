@@ -1,9 +1,11 @@
 const pool = require('../../database/postgres/pool');
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
-const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
-const AuthenticationsTableTestHelper = require('../../../../tests/AuthenticationsTableTestHelper');
+
 const container = require('../../container');
 const createServer = require('../createServer');
+
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
+const AuthenticationsTableTestHelper = require('../../../../tests/AuthenticationsTableTestHelper');
 
 describe('/threads/{threadId}/comments endpoint', () => {
   afterAll(async () => {
@@ -60,7 +62,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
     it('should response 401 when there is missing auth', async () => {
       // Arrange
       const requestPayload = {
-        content: 'content of comment in thread',
+        content: 'This is comment',
       };
       // eslint-disable-next-line no-undef
       const server = await createServer(container);
@@ -68,7 +70,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
       // Action
       const response = await server.inject({
         method: 'POST',
-        url: '/threads/abc/comments',
+        url: '/threads/xyz/comments',
         payload: requestPayload,
       });
 
@@ -82,13 +84,13 @@ describe('/threads/{threadId}/comments endpoint', () => {
     it('should response 400 when request payload not contain needed property', async () => {
       // Arrange
       const loginPayload = {
-        username: 'dicoding',
+        username: 'sabrinazulfawa',
         password: 'secret123',
       };
 
       const threadPayload = {
-        title: 'Example title',
-        body: 'Body of thread is in here',
+        title: 'My title',
+        body: 'The body of thread goes here',
       };
       const requestPayload = {};
 
@@ -100,7 +102,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         payload: { 
             username: loginPayload.username,
             password: loginPayload.password,
-            fullname: 'Dicoding Indonesia',
+            fullname: 'Sabrina Zulfa Wahidah',
         },
       });
 
@@ -144,8 +146,8 @@ describe('/threads/{threadId}/comments endpoint', () => {
       };
 
       const threadPayload = {
-        title: 'title of thread',
-        body: 'body of thread',
+        title: 'My title',
+        body: 'My body',
       };
       const requestPayload = {
         contet: true,
@@ -201,7 +203,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
     it('it should response 401 when authentiction is missing', async () => {
       const loginPayload = {
         username: 'dicoding',
-        password: 'secret123',
+        password: 'secret',
       };
 
       const threadPayload = {
@@ -209,7 +211,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         body: 'Body of thread is in here',
       };
       const requestPayload = {
-        content: 'Test comment',
+        content: 'My comment',
       };
       
       const server = await createServer(container);
@@ -257,18 +259,18 @@ describe('/threads/{threadId}/comments endpoint', () => {
     it('it should response 403 when the people that not owner of comment try to delete comment', async () => {
       const loginPayload = {
         username: 'dicoding',
-        password: 'secret123',
+        password: 'secret',
       };
       const notOwnerPayload = {
         username: 'jouhndoe',
         password: 'secret',
       };
       const threadPayload = {
-        title: 'Example title',
-        body: 'Body of thread is in here',
+        title: 'title john doe',
+        body: 'this is body title john doe',
       };
       const requestPayload = {
-        content: 'Test comment',
+        content: 'My comment',
       };
 
       const server = await createServer(container);
@@ -347,11 +349,11 @@ describe('/threads/{threadId}/comments endpoint', () => {
         password: 'secret',
       };
       const threadPayload = {
-        title: 'title of thread',
-        body: 'body of thread',
+        title: 'My title',
+        body: 'My body',
       };
       const commentPayload = {
-        content: 'Test comment',
+        content: 'My comment',
       };
 
       const server = await createServer(container);
@@ -361,7 +363,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         payload: {
             username: loginPayload.username,
             password: loginPayload.password,
-            fullname: 'Dicoding Indonesia',
+            fullname: 'Sabrina Zulfa Wahidah',
         },
       });
 

@@ -1,8 +1,10 @@
 const pool = require('../../database/postgres/pool');
+const RepliesTableTestHelper = require('../../../../tests/RepliesTableTestHelper');
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const AuthenticationsTableTestHelper = require('../../../../tests/AuthenticationsTableTestHelper');
+
 const container = require('../../container');
 const createServer = require('../createServer');
 
@@ -205,6 +207,9 @@ describe('/threads endpoint', () => {
       const commentPayload = {
         content: 'Test comment',
       };
+      const replyPayload = {
+        content: 'My reply',
+      };
 
       const server = await createServer(container);
       await server.inject({
@@ -238,6 +243,15 @@ describe('/threads endpoint', () => {
         method: 'POST',
         url: `/threads/${threadId}/comments`,
         payload: commentPayload,
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      const commentResponse = JSON.parse(comment.payload);
+      const commentId = commentResponse.data.addedComment.id;
+
+      await server.inject({
+        method: 'POST',
+        url: `/threads/${threadId}/comments/${commentId}/replies`,
+        payload: replyPayload,
         headers: { Authorization: `Bearer ${authToken}` },
       });
 

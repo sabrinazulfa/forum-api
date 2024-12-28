@@ -1,4 +1,3 @@
-const { query } = require('@hapi/hapi/lib/validation');
 const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
 const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 const CommentRepository = require('../../Domains/comments/CommentRepository');
@@ -18,29 +17,29 @@ class CommentRepositoryPostgres extends CommentRepository {
     const date = new Date().toISOString();
 
     const query = {
-      text: `INSERT INTO users VALUES($1, $2, $3, $4, $5, $6) RETURNING id, content, owner`,
+      text: `INSERT INTO comments VALUES($1, $2, $3, $4, $5, $6) RETURNING id, content, owner`,
       values: [id, threadId, content, date, owner, false],
     };
 
     const result = await this._pool.query(query);
 
     return new AddedComment({
-        id: result.rows[0].id,
-        content: result.rows[0].content,
-        owner: result.rows[0].owner,
+      id: result.rows[0].id,
+      content: result.rows[0].content,
+      owner: result.rows[0].owner,
     });
   }
 
-  async checkAvailableComment(id){
+  async checkAvailableComment(id) {
     const query = {
-      text: 'SELECT id, thread, owner, content, is_delete FROM comments WHERE id = $1',
+      text: 'SELECT id, thread_id, owner, content, is_delete FROM comments WHERE id = $1',
       values: [id],
     };
 
     const result = await this._pool.query(query);
 
     if (result.rowCount) {
-      throw new NotFoundError('comment tidak tersedia');
+      throw new NotFoundError('comment tidak ditemukan');
     }
   }
 
@@ -59,7 +58,7 @@ class CommentRepositoryPostgres extends CommentRepository {
 
   async deleteCommentById(threadId, commentId) {
     const query = {
-      text: 'UPDATE comments SET is_delete = true WHERE thread = $1 and id = $2',
+      text: 'UPDATE comments SET is_delete = true WHERE thread_id = $1 and id = $2',
       values: [threadId, commentId],
     };
 
@@ -68,13 +67,12 @@ class CommentRepositoryPostgres extends CommentRepository {
 
   async getCommentByThreadId(threadId) {
     const query = {
-        text: `SELECT comments.id, users.username, comments.date, comments.is_delete, comments.content
+      text: `SELECT comments.id, users.username, comments.date, comments.is_delete, comments.content
                 FROM comments
                 INNER JOIN users ON comments.owner = users.id
                 WHERE comments.thread = $1
-                ORDER BY comments.date ASC
-                `,
-        values: [threadId],
+                ORDER BY comments.date ASC`,
+      values: [threadId],
     };
 
     const result = await this._pool.query(query);

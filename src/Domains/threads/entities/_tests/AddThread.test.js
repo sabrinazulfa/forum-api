@@ -4,7 +4,7 @@ describe('an AddThread entities', () => {
   it('should throw error when payload did not contain needed property', () => {
     // Arrange
     const payload = {
-      title: 'judul misal abc',
+      title: 'ini thread',
     };
  
     // Action and Assert
@@ -15,7 +15,7 @@ describe('an AddThread entities', () => {
     // Arrange
     const payload = {
       title: 123,
-      body: 'isi body',
+      body: 'test',
       owner: {},
     };
 
@@ -23,11 +23,11 @@ describe('an AddThread entities', () => {
     expect(() => new AddThread(payload)).toThrowError('ADD_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
-  it('should create addThread object correctly', () => {
+  it('should create newThread object correctly', () => {
     // Arrange
     const payload = {
-      title: 'Thread Title',
-      body: 'Thread Body',
+      title: 'ini title',
+      body: 'ini body',
     };
 
     // Action

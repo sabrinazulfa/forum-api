@@ -8,11 +8,11 @@ describe('an DetailedThread entities', () => {
       title: 'judul misal abc',
       body: 'Body of threads example.',
       date: '2024-12-12T12:11:04.346Z',
-      username: 'user-789',
+      username: 'user-456',
     };
  
     // Action and Assert
-    expect(() => new DetailedThread(payload)).toThrowError('DETAILED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new DetailedThread(payload)).toThrow('DETAILED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
   });
 
   it('should throw error when payload did not meet data type specification', () => {
@@ -22,12 +22,12 @@ describe('an DetailedThread entities', () => {
       title: 'judul misal abc',
       body: 'Body of threads example.',
       date: '2024-12-12T12:11:04.346Z',
-      username: 'user-789',
+      username: 'user-456',
       comments: 'good job',
     };
 
     // Action and assert
-    expect(() => new DetailedThread(payload)).toThrowError('DETAILED_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    expect(() => new DetailedThread(payload)).toThrow('DETAILED_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
   it('should create DetailedThread object correctly', () => {
@@ -37,19 +37,19 @@ describe('an DetailedThread entities', () => {
       title: 'judul misal abc',
       body: 'Body of threads example.',
       date: '2024-12-12T12:11:04.346Z',
-      username: 'user-789',
+      username: 'user-456',
       comments: []
     };
 
     // Action
-    const detailedThread = new DetailedThread(payload);
+    const { id, title, body, date, username, comments } = new DetailedThread(payload);
 
     // Assert
-    expect(detailedThread.id).toEqual(payload.id);
-    expect(detailedThread.title).toEqual(payload.title);
-    expect(detailedThread.body).toEqual(payload.body);
-    expect(detailedThread.date).toEqual(payload.date);
-    expect(detailedThread.username).toEqual(payload.username);
-    expect(detailedThread.comments).toEqual(payload.comments);
+    expect(id).toEqual(payload.id);
+    expect(title).toEqual(payload.title);
+    expect(body).toEqual(payload.body);
+    expect(date).toEqual(payload.date);
+    expect(username).toEqual(payload.username);
+    expect(comments).toEqual(payload.comments);
   });
 });

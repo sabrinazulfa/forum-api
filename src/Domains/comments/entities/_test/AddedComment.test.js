@@ -5,31 +5,31 @@ describe('an AddedComment entities', () => {
     // Arrange
     const payload = {
       id: 'thread-123',
-      title: 'title of thread',
-      user: 'test',
+      title:  'This is title',
+      user: 'dad',
     };
  
     // Action and Assert
-    expect(() => new AddedComment(payload)).toThrowError('ADD_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new AddedComment(payload)).toThrow('ADD_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
   });
 
-  it('should throw error when payload did not meet data type specification', () => {
+  it('should throw error when payload did not meet data type', () => {
     // Arrange
     const payload = {
-      id: 123,
-      content: 'title of thread',
-      owner: 'user-123',
+      id: 'thread-123',
+      content: 'This is title',
+      owner: 123,
     };
 
     // Action and assert
-    expect(() => new AddedComment(payload)).toThrowError('ADD_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    expect(() => new AddedComment(payload)).toThrow('ADD_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
   it('should create addedThread object correctly', () => {
     // Arrange
     const payload = {
-      id: 123,
-      content: 'title of thread',
+      id: 'comment-123',
+      content: 'This is content',
       owner: 'user-123',
     };
 
@@ -37,8 +37,8 @@ describe('an AddedComment entities', () => {
     const addedComment = new AddedComment(payload);
 
     // Assert
-    expect(addedComment.id).toEqual(payload.id);
-    expect(addedComment.content).toEqual(payload.content);
-    expect(addedComment.owner).toEqual(payload.owner);
+    expect(addedComment.id).toStrictEqual(payload.id);
+    expect(addedComment.content).toStrictEqual(payload.content);
+    expect(addedComment.owner).toStrictEqual(payload.owner);
   });
 });
