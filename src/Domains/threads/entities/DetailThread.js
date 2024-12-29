@@ -1,4 +1,4 @@
-class DetailedThread {
+class DetailThread {
   constructor(payload) {
     this._verifyPayload(payload);
 
@@ -16,13 +16,13 @@ class DetailedThread {
     id, title, body, date, username, comments,
   }) {
     if (!id || !title || !body || !date || !username || !comments) {
-      throw new Error('DETAILED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
+      throw new Error('DETAIL_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
     if (typeof id !== 'string' || typeof title !== 'string' || typeof body !== 'string' || typeof date !== 'string' || typeof username !== 'string' || !Array.isArray(comments)) {
-      throw new Error('DETAILED_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
+      throw new Error('DETAIL_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
 }
 
-module.exports = DetailedThread;
+module.exports = DetailThread;

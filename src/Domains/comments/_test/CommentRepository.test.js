@@ -6,10 +6,20 @@ describe('CommentRepository interface', () => {
     const commentRepository = new CommentRepository();
 
     // Action and Assert
-    await expect(commentRepository.addComment('', '', {})).rejects.toThrow('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    await expect(commentRepository.checkAvailableComment('')).rejects.toThrow('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    await expect(commentRepository.verifyCommentOwner('', '')).rejects.toThrow('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    await expect(commentRepository.deleteCommentById('')).rejects.toThrow('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    await expect(commentRepository.getCommentByThreadId('')).rejects.toThrow('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    await expect(commentRepository.addComment('', '', {})).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    await expect(commentRepository.checkAvailableComment('')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    await expect(commentRepository.verifyCommentOwner('', '')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    await expect(commentRepository.deleteCommentById('')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    await expect(commentRepository.getCommentByThreadId('')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
   });
 });

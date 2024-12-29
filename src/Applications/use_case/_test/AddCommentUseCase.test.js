@@ -1,13 +1,13 @@
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const AddedComment = require('../../../Domains/comments/entities/AddedComment');
+const AddComment = require('../../../Domains/comments/entities/AddComment');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
-const AddComment = require('../../Domains/comments/entities/AddComment');
 const AddCommentUseCase = require('../AddCommentUseCase');
 
 describe('AddCommentUseCase', () => {
   it('should orchestrating the add comment action correctly', async () => {
     const useCasePayload = {
-      content: 'god job',
+      content: 'Nice article!',
     };
 
     const mockThread = { id: 'thread-123' };

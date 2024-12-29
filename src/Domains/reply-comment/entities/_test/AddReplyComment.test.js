@@ -21,7 +21,7 @@ describe('AddReplyComment entities', () => {
 
   it('should create NewReply object correctly', () => {
     const payload = {
-      content: 'good job',
+      content: 'Nice article!',
     };
 
     const { content } = new AddReplyComment(payload);

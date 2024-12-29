@@ -1,4 +1,4 @@
-const AddedReplyComment = require('../entities/AddedReplyComment');
+const AddedReplyComment = require('../AddedReplyComment');
 
 describe('AddedReplyComment entities', () => {
   it('should throw error when payload did not contain needed property', () => {
@@ -27,7 +27,7 @@ describe('AddedReplyComment entities', () => {
   it('should create AddedReply object correctly', () => {
     const payload = {
       id: 'reply-123',
-      content: 'good job',
+      content: 'Nice article!',
       owner: 'user-456',
     };
 

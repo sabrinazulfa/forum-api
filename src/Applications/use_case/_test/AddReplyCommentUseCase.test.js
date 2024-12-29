@@ -1,6 +1,6 @@
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
-const AddReplyComment = require('../../../Domains/reply-comment/entities/AddedReplyComment');
 const AddedReplyComment = require('../../../Domains/reply-comment/entities/AddReplyComment');
+const AddReplyComment = require('../../../Domains/reply-comment/entities/AddedReplyComment');
 const ReplyCommentRepository = require('../../../Domains/reply-comment/ReplyCommentRepository');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const AddReplyCommentUseCase = require('../AddReplyCommentUseCase');
@@ -11,9 +11,15 @@ describe('AddReplyCommentUseCase', () => {
       content: 'My reply',
     };
 
-    const mockThread = { id: 'thread-123' };
-    const mockUser = { id: 'user-123' };
-    const mockComment = { id: 'comment-123'};
+    const mockThread = { 
+      id: 'thread-123',
+    };
+    const mockUser = { 
+      id: 'user-123',
+    };
+    const mockComment = { 
+      id: 'comment-123',
+    };
 
     const mockAddedReplyComment = new AddedReplyComment({
       id: 'reply-325',
@@ -21,10 +27,10 @@ describe('AddReplyCommentUseCase', () => {
       owner: mockUser.id,
     });
 
-    const mockThreadRepository = new ThreadRepository();
-    const mockCommentReposiotry = new CommentRepository();
     const mockReplyCommentRepository = new ReplyCommentRepository();
-
+    const mockCommentReposiotry = new CommentRepository();
+    const mockThreadRepository = new ThreadRepository();
+    
     mockThreadRepository.checkAvailableThread = jest
       .fn()
       .mockImplementation(() => Promise.resolve());
@@ -36,12 +42,12 @@ describe('AddReplyCommentUseCase', () => {
       .mockImplementation(() => Promise.resolve(mockAddedReplyComment));
 
     const addReplyCommentUseCase = new AddReplyCommentUseCase({
-      replyCommentRepository: mockAddedReplyComment,
-      commentRepository: mockCommentReposiotry,
+      replyCommentRepository: mockReplyCommentRepository,
       threadRepository: mockThreadRepository,
+      commentRepository: mockCommentReposiotry,
     });
 
-    const addedReplyComment = await AddReplyCommentUseCase.execute(
+    const addedReplyComment = await addReplyCommentUseCase.execute(
       mockComment.id,
       mockThread.id,
       mockUser.id,
@@ -58,7 +64,7 @@ describe('AddReplyCommentUseCase', () => {
 
     expect(mockThreadRepository.checkAvailableThread).toBeCalledWith(mockThread.id);
     expect(mockCommentReposiotry.checkAvailableComment).toBeCalledWith(mockComment.id);
-    expect(mockReplyCommentReposiotry.addReplyComment).toBeCalledWith(
+    expect(mockReplyCommentRepository.addReplyComment).toBeCalledWith(
       mockUser.id,
       mockComment.id,
       new AddReplyComment({

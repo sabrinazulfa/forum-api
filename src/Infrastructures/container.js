@@ -25,7 +25,7 @@ const BcryptPasswordHash = require('./security/BcryptPasswordHash');
 const AddUserUseCase = require('../Applications/use_case/AddUserUseCase');
 const AddThreadUseCase = require('../Applications/use_case/AddThreadUseCase');
 const AddCommentUseCase = require('../Applications/use_case/AddCommentUseCase');
-const addReplyCommentUseCase = require('../Applications/use_case/AddReplyCommentUseCase');
+const AddReplyCommentUseCase = require('../Applications/use_case/AddReplyCommentUseCase');
 const DeleteCommentUseCase = require('../Applications/use_case/DeleteCommentUseCase');
 const DeleteReplyCommentUseCase = require('../Applications/use_case/DeleteReplyCommentUseCase');
 const GetDetailThreadUseCase = require('../Applications/use_case/GetDetailThreadUseCase');
@@ -37,7 +37,6 @@ const AuthenticationRepository = require('../Domains/authentications/Authenticat
 const AuthenticationRepositoryPostgres = require('./repository/AuthenticationRepositoryPostgres');
 const LogoutUserUseCase = require('../Applications/use_case/LogoutUserUseCase');
 const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAuthenticationUseCase');
-const AddReplyCommentUseCase = require('../Applications/use_case/AddReplyCommentUseCase');
 
 // creating container
 const container = createContainer();
@@ -289,7 +288,7 @@ container.register([
         },
         {
           name: 'threadRepository',
-          internal: ReplyCommentRepository.name,
+          internal: ThreadRepository.name,
         },
         {
           name: 'commentRepository',

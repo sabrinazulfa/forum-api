@@ -1,21 +1,25 @@
-class AddReplyComment {
+class AddedReplyComment {
   constructor(payload) {
     this._verifyPayload(payload);
 
-    const { content } = payload;
+    const { id, content, owner } = payload;
 
+    this.id = id;
     this.content = content;
+    this.owner = owner;
   }
 
-  _verifyPayload({ content }) {
-    if (!content) {
-      throw new Error('ADD_REPLY.NOT_CONTAIN_NEEDED_PROPERTY');
+  _verifyPayload(payload) {
+    const { id, content, owner } = payload;
+
+    if (!id || !content || !owner) {
+      throw new Error('ADDED_REPLY_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
-    if (typeof content !== 'string') {
-      throw new Error('ADD_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    if (typeof id !== 'string' || typeof content !== 'string' || typeof owner !== 'string') {
+      throw new Error('ADDED_REPLY_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
 }
 
-module.exports = AddReplyComment;
+module.exports = AddedReplyComment;

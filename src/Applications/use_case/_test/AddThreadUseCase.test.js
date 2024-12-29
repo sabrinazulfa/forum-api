@@ -6,11 +6,13 @@ const AddThreadUseCase = require('../AddThreadUseCase');
 describe('AddThreadUseCase', () => {
   it('should orchestrating the add thread action correctly', async () => {
     const useCasePayload = {
-      title: 'this is title',
-      body: 'this is body',
+      title: 'Repuclic State National implementation in Indonesia',
+      body: 'Recently Indonesia is in stage that defined by criticus on warning literation.',
     };
 
-    const mockUser = { id: 'user-123' };
+    const mockUser = { 
+      id: 'user-123',
+    };
 
     const mockAddedThread = new AddedThread({
       id: 'thread-456',
@@ -41,7 +43,7 @@ describe('AddThreadUseCase', () => {
       }),
     );
 
-    expect(mockThreadReposiotry.addThread).toBeCalledWith(
+    expect(mockThreadRepository.addThread).toBeCalledWith(
       mockUser.id,
       new AddThread({
         title: useCasePayload.title,

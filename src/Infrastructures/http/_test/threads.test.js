@@ -4,7 +4,6 @@ const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelp
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const AuthenticationsTableTestHelper = require('../../../../tests/AuthenticationsTableTestHelper');
-
 const container = require('../../container');
 const createServer = require('../createServer');
 
@@ -24,8 +23,8 @@ describe('/threads endpoint', () => {
     it('should response 401 when there is missing auth', async () => {
       // Arrange
       const requestPayload = {
-        title: 'title of thread',
-        body: 'body of thread',
+        title: 'Title One',
+        body: 'Body One',
       };
       // eslint-disable-next-line no-undef
       const server = await createServer(container);
@@ -98,7 +97,7 @@ describe('/threads endpoint', () => {
 
       const requestPayload = {
         title: 'Body with invalid type',
-        body: 123456,
+        body: 12345,
       };
 
       const server = await createServer(container);
@@ -143,8 +142,8 @@ describe('/threads endpoint', () => {
       };    
       // Arrange
       const requestPayload = {
-        title: 'title of thread',
-        body: 'body of thread',
+        title: 'Title goes here',
+        body: 'My body goes here',
       };
       const server = await createServer(container);
       
@@ -192,7 +191,7 @@ describe('/threads endpoint', () => {
 
         expect(response.statusCode).toEqual(404);
         expect(responseJson.status).toEqual('fail');
-        expect(responseJson.message).toEqual('thread tidak ditemukan');
+        expect(responseJson.message).toEqual('Thread tidak ditemukan');
     });
 
     it('it should return a thread with details', async () => {
@@ -201,11 +200,11 @@ describe('/threads endpoint', () => {
         password: 'secret',
       };
       const threadPayload = {
-        title: 'title of thread',
-        body: 'body of thread',
+        title: 'Title goes here',
+        body: 'My body goes here',
       };
       const commentPayload = {
-        content: 'Test comment',
+        content: 'My comment',
       };
       const replyPayload = {
         content: 'My reply',
@@ -257,7 +256,7 @@ describe('/threads endpoint', () => {
 
       const response = await server.inject({
         method: 'GET',
-        url: `threads/${threadId}`,
+        url: `/threads/${threadId}`,
       });
       const responseJson = JSON.parse(response.payload);
 

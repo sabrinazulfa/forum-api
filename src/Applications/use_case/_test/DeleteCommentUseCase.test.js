@@ -3,24 +3,30 @@ const DeleteCommentUseCase = require('../DeleteCommentUseCase');
 
 describe('DeleteCommentUseCase', () => {
   it('should orchestrating the delete comment action correctly', async () => {
-    const mockCommentReposiotry = new CommentRepository();
+    const mockCommentRepository = new CommentRepository();
 
-    const mockThread = { id: 'thread-123' };
-    const mockComment = { id: 'comment-123' };
-    const mockUser = { ownerId: 'user-123' };
+    const mockThread = {
+      id: 'thread-123',
+    };
+    const mockComment = {
+      id: 'comment-123',
+    };
+    const mockUser = {
+      ownerId: 'user-123',
+    };
 
-    mockCommentReposiotry.checkAvailableComment = jest
+    mockCommentRepository.checkAvailableComment = jest
       .fn()
       .mockImplementation(() => Promise.resolve());
-    mockCommentReposiotry.verifyCommentOwner = jest
+    mockCommentRepository.verifyCommentOwner = jest
       .fn()
       .mockImplementation(() => Promise.resolve());
-    mockCommentReposiotry.deleteCommentById = jest
+    mockCommentRepository.deleteCommentById = jest
       .fn()
       .mockImplementation(() => Promise.resolve());
 
     const deleteCommentUseCase = new DeleteCommentUseCase({
-      commentRepository: mockCommentReposiotry,
+      commentRepository: mockCommentRepository,
     });
 
     await deleteCommentUseCase.execute({      
@@ -29,9 +35,14 @@ describe('DeleteCommentUseCase', () => {
       ownerId: mockUser.ownerId,
     });
     
-    expect(mockCommentReposiotry.checkAvailableComment).toBeCalledWith(mockComment.id);
-    expect(mockCommentReposiotry.verifyCommentOwner).toBeCalledWith(mockComment.id, mockUser.ownerId);
-    expect(mockCommentReposiotry.deleteCommentById).toBeCalledWith(
+    expect(mockCommentRepository.checkAvailableComment).toBeCalledWith(
+      mockComment.id,
+    );
+    expect(mockCommentRepository.verifyCommentOwner).toBeCalledWith(
+      mockComment.id,
+      mockUser.ownerId,
+    );
+    expect(mockCommentRepository.deleteCommentById).toBeCalledWith(
       mockThread.id,
       mockComment.id,
     );

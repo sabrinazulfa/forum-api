@@ -10,7 +10,9 @@ describe('an AddedComment entities', () => {
     };
  
     // Action and Assert
-    expect(() => new AddedComment(payload)).toThrow('ADD_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new AddedComment(payload)).toThrow(
+      'ADDED_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY',
+    );
   });
 
   it('should throw error when payload did not meet data type', () => {
@@ -22,7 +24,9 @@ describe('an AddedComment entities', () => {
     };
 
     // Action and assert
-    expect(() => new AddedComment(payload)).toThrow('ADD_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    expect(() => new AddedComment(payload)).toThrow(
+      'ADDED_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION',
+    );
   });
 
   it('should create addedThread object correctly', () => {

@@ -6,12 +6,14 @@ describe('an DetailComment entities', () => {
     const payload = {
       id: 'comment-123',
       date: '2024-12-12T12:11:04.346Z',
-      content: 'good job',
+      content: 'Nice article!',
       replies: [],
     };
  
     // Action and Assert
-    expect(() => new DetailComment(payload)).toThrowError('DETAIL_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new DetailComment(payload)).toThrowError(
+      'DETAIL_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY',
+    );
   });
 
   it('should throw error when payload did not meet data type specification', () => {
@@ -25,7 +27,9 @@ describe('an DetailComment entities', () => {
     };
 
     // Action and assert
-    expect(() => new DetailComment(payload)).toThrowError('DETAIL_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    expect(() => new DetailComment(payload)).toThrowError(
+      'DETAIL_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION',
+    );
   });
 
   it('should create DetailComment object correctly when isDeleted false', () => {
@@ -34,12 +38,14 @@ describe('an DetailComment entities', () => {
       id: 'comment-123',
       username: 'user-456',
       date: '2024-12-12T12:11:04.346Z',
-      content: 'good job',
+      content: 'Nice article!',
       replies: [],
       isDelete: false,
     };
 
-    const { id, username, date, content, replies } = new DetailComment(payload);
+    const {
+      id, username, date, content, replies,
+    } = new DetailComment(payload);
 
     // Assert
     expect(id).toEqual(payload.id);
@@ -55,12 +61,14 @@ describe('an DetailComment entities', () => {
       id: 'comment-123',
       username: 'user-456',
       date: '2024-12-12T12:11:04.346Z',
-      contents: 'good job',
+      contents: 'Nice article!',
       replies: [],
       isDelete: true,
     };
 
-    const { id, username, date, content, replies } = new DetailComment(payload);
+    const {
+      id, username, date, content, replies,
+    } = new DetailComment(payload);
 
     // Assert
     expect(id).toEqual(payload.id);

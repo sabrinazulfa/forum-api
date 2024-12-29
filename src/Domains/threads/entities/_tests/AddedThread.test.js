@@ -12,7 +12,7 @@ describe('an AddedThread entities', () => {
     expect(() => new AddedThread(payload)).toThrow('ADDED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
   });
 
-  it('should throw error when payload did not meet data type specification', () => {
+  it('should throw error when payload property did not meet data type specification', () => {
     // Arrange
     const payload = {
       id: 'thread-123',
@@ -21,7 +21,7 @@ describe('an AddedThread entities', () => {
     };
 
     // Action and assert
-    expect(() => new AddedThread(payload)).toThrow('ADDED_THREAD.NOT_MEET_DATA_TYPE_NEEDED');
+    expect(() => new AddedThread(payload)).toThrow('ADDED_THREAD.PROPERTY_NOT_MEET_DATA_TYPE_NEEDED');
   });
 
   it('should create addedThread object correctly', () => {

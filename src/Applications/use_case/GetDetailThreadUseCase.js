@@ -1,4 +1,5 @@
-const DetailedThread = require('../../Domains/threads/entities/DetailedThread');
+// Detail Thread
+const DetailThread = require('../../Domains/threads/entities/DetailThread');
 const DetailComment = require('../../Domains/comments/entities/DetailComment');
 const DetailReplyComment = require('../../Domains/reply-comment/entities/DetailReplyComment');
 
@@ -16,14 +17,14 @@ class GetDetailThreadUseCase {
   }
 
   async execute(threadId) {
-    const getThread = await this._threadRepository.getThreadById(threadId);
+    const threadFromId = await this._threadRepository.getThreadById(threadId);
 
-    const thread = new DetailedThread({
-      id: getThread.id,
-      title: getThread.title,
-      body: getThread.body,
-      date: getThread.date,
-      username: getThread.username,
+    const thread = new DetailThread({
+      id: threadFromId.id,
+      title: threadFromId.title,
+      body: threadFromId.body,
+      date: threadFromId.date,
+      username: threadFromId.username,
       comments: [],
     })
 

@@ -2,7 +2,9 @@ class ReplyDetailComment {
   constructor(payload) {
     this._verifyPayload(payload);
 
-    const { id, content, date, username } = this._remapPayload(payload);
+    const { 
+      id, content, date, username,
+    } = this._remapPayload(payload);
 
     this.id = id;
     this.content = content;
@@ -22,7 +24,9 @@ class ReplyDetailComment {
     }
   }
 
-  _remapPayload({ id, content, date, username, isDelete }) {
+  _remapPayload({
+    id, content, date, username, isDelete,
+  }) {
     return {
       id,
       content: isDelete ? '**balasan telah dihapus**' : content,

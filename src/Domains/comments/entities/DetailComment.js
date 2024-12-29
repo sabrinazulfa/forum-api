@@ -2,7 +2,9 @@ class DetailComment {
   constructor(payload) {
     this._verifyPayload(payload);
 
-    const { id, username, date, content, replies } = this._remapPayload(payload);
+    const {
+      id, username, date, content, replies
+    } = this._remapPayload(payload);
 
     this.id = id;
     this.username = username;

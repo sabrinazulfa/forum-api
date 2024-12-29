@@ -4,59 +4,59 @@ const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelp
 const container = require('../../container');
 const createServer = require('../createServer');
 
-const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const AuthenticationsTableTestHelper = require('../../../../tests/AuthenticationsTableTestHelper');
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 
 describe('/threads/{threadId}/comments endpoint', () => {
+  afterEach(async () => {
+    await AuthenticationsTableTestHelper.cleanTable();
+    await UsersTableTestHelper.cleanTable();
+    await CommentsTableTestHelper.cleanTable();
+  });
+
   afterAll(async () => {
     await pool.end();
   });
 
-  afterEach(async () => {
-    await CommentsTableTestHelper.cleanTable();
-    await UsersTableTestHelper.cleanTable();
-    await AuthenticationsTableTestHelper.cleanTable();
-  });
-
   describe('when POST /threads/{threadId}/comments', () => {
     it('shold response 201 and added comment', async () => {
-        const commentPayload = {
-            content: 'ini content',
-        };
-        const accessToken = await AuthenticationsTableTestHelper.getAccessToken();
-        const server = await createServer(container);
+      const commentPayload = {
+        content: 'ini content',
+      };
+      const accessToken = await AuthenticationsTableTestHelper.getAccessToken();
+      const server = await createServer(container);
 
-        const threadResponse = await server.inject({
-            method: 'POST',
-            url: '/threads',
-            payload: {
-                title: 'title',
-                body: 'dummy body',
-            },
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        console.log(threadResponse);
-        const {
-            data: {
-                addedThread: { id: threadId },
-            },
-        } = JSON.parse(threadResponse.payload);
+      const threadResponse = await server.inject({
+        method: 'POST',
+        url: '/threads',
+        payload: {
+          title: 'title',
+          body: 'dummy body',
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(threadResponse);
+      const {
+        data: {
+          addedThread: { id: threadId },
+        },
+      } = JSON.parse(threadResponse.payload);
 
-        const response = await server.inject({
-            method: 'POST',
-            url: `threads/${threadId}/comments`,
-            payload: commentPayload,
-            headers: {
-                Authorization : `Bearer ${accessToken}`,
-            },
-        });
+      const response = await server.inject({
+        method: 'POST',
+        url: `threads/${threadId}/comments`,
+        payload: commentPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-        const responseJson = JSON.parse(response.payload);
-        expect(response.statusCode).toEqual(201);
-        expect(responseJson.status).toEqual('success');
-        expect(responseJson.data).toBeDefined();
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(201);
+      expect(responseJson.status).toEqual('success');
+      expect(responseJson.data).toBeDefined();
     });
 
     it('should response 401 when there is missing auth', async () => {
@@ -84,8 +84,8 @@ describe('/threads/{threadId}/comments endpoint', () => {
     it('should response 400 when request payload not contain needed property', async () => {
       // Arrange
       const loginPayload = {
-        username: 'sabrinazulfawa',
-        password: 'secret123',
+        username: 'sabrinazulfa',
+        password: 'password123',
       };
 
       const threadPayload = {
@@ -99,10 +99,10 @@ describe('/threads/{threadId}/comments endpoint', () => {
       await server.inject({
         method: 'POST',
         url: '/users',
-        payload: { 
-            username: loginPayload.username,
-            password: loginPayload.password,
-            fullname: 'Sabrina Zulfa Wahidah',
+        payload: {
+          username: loginPayload.username,
+          password: loginPayload.password,
+          fullname: 'Sabrina Zulfa Wahidah',
         },
       });
 
@@ -135,12 +135,12 @@ describe('/threads/{threadId}/comments endpoint', () => {
       expect(response.statusCode).toEqual(400);
       expect(responseJson.status).toEqual('fail');
       expect(responseJson.message).toEqual(
-        'tidak dapat membuat thread baru karena properti yang dibutuhkan tidak ada',
+        'tidak dapat membuat comment baru karena properti yang dibutuhkan tidak ada',
       );
     });
 
     it('should response 400 when request payload has invalid property type', async () => {
-     const loginPayload = {
+      const loginPayload = {
         username: 'dicoding',
         password: 'secret',
       };
@@ -158,10 +158,10 @@ describe('/threads/{threadId}/comments endpoint', () => {
       await server.inject({
         method: 'POST',
         url: '/users',
-        payload: { 
-            username: loginPayload.username,
-            password: loginPayload.password,
-            fullname: 'Dicoding Indonesia',
+        payload: {
+          username: loginPayload.username,
+          password: loginPayload.password,
+          fullname: 'Dicoding Indonesia',
         },
       });
 
@@ -213,16 +213,16 @@ describe('/threads/{threadId}/comments endpoint', () => {
       const requestPayload = {
         content: 'My comment',
       };
-      
+
       const server = await createServer(container);
 
       await server.inject({
         method: 'POST',
         url: '/users',
-        payload: { 
-            username: loginPayload.username,
-            password: loginPayload.password,
-            fullname: 'Dicoding Indonesia',
+        payload: {
+          username: loginPayload.username,
+          password: loginPayload.password,
+          fullname: 'Dicoding Indonesia',
         },
       });
 
@@ -253,7 +253,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(401);
       expect(responseJson.status).toEqual('Unauthorized');
-      expect(responseJson.message).toEqual('Authentication is missing');
+      expect(responseJson.message).toEqual('Missing authentication');
     });
 
     it('it should response 403 when the people that not owner of comment try to delete comment', async () => {
@@ -277,19 +277,19 @@ describe('/threads/{threadId}/comments endpoint', () => {
       await server.inject({
         method: 'POST',
         url: '/users',
-        payload: { 
-            username: loginPayload.username,
-            password: loginPayload.password,
-            fullname: 'John Doe',
+        payload: {
+          username: loginPayload.username,
+          password: loginPayload.password,
+          fullname: 'John Doe',
         },
       });
       await server.inject({
         method: 'POST',
         url: '/users',
         payload: {
-            username: notOwnerPayload.username,
-            password: notOwnerPayload.password,
-            fullname: 'Sabrina zulfa wahidah',
+          username: notOwnerPayload.username,
+          password: notOwnerPayload.password,
+          fullname: 'Sabrina zulfa wahidah',
         },
       });
 
@@ -327,7 +327,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
       });
       const notOwnerResponse = JSON.parse(notOwnerAuth.payload);
       const notOwnerToken = notOwnerResponse.data.accessToken;
-      
+
       const response = await server.inject({
         method: 'DELETE',
         url: `/threads/${threadId}/comments/${commentId}`,
@@ -361,9 +361,9 @@ describe('/threads/{threadId}/comments endpoint', () => {
         method: 'POST',
         url: '/users',
         payload: {
-            username: loginPayload.username,
-            password: loginPayload.password,
-            fullname: 'Sabrina Zulfa Wahidah',
+          username: loginPayload.username,
+          password: loginPayload.password,
+          fullname: 'Sabrina Zulfa Wahidah',
         },
       });
 

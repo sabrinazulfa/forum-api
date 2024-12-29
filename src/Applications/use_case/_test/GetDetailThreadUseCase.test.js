@@ -2,7 +2,6 @@ const ReplyCommentRepository = require('../../../Domains/reply-comment/ReplyComm
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const UserRepository = require('../../../Domains/users/UserRepository');
-
 const GetDetailThreadUseCase = require('../GetDetailThreadUseCase');
 
 describe('GetdetailThreadUseCase', () => {
@@ -24,14 +23,14 @@ describe('GetdetailThreadUseCase', () => {
       {
         id: 'comment-123',
         username: 'sabrinazulfa',
-        date: '2024-10-07T01:58:38.808Z',
+        date: '2024-12-15T22:15:46.551Z',
         is_delete: false,
         content: 'Test comment one',
       },
       {
         id: 'comment-456',
         username: 'johndoe',
-        date: '2024-10-07T02:54:10.771Z',
+        date: '2024-12-12T23:15:46.313Z',
         is_delete: true,
         content: '**komentar telah dihapus**',
       },
@@ -41,14 +40,14 @@ describe('GetdetailThreadUseCase', () => {
       {
         id: 'reply-123',
         username: 'johndoe',
-        date: '2024-10-07T02:54:38.565Z',
+        date: '2024-12-12T02:54:38.565Z',
         is_delete: false,
         content: 'Reply goes here',
       },
       {
         id: 'reply-456',
         username: 'sabrinazulfa',
-        date: '2024-10-07T02:55:46.810Z',
+        date: '2024-12-12T02:55:46.810Z',
         is_delete: true,
         content: '**balasan telah dihapus**',
       },
