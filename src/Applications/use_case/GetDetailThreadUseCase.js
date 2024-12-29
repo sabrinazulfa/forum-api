@@ -1,40 +1,74 @@
-const NotFoundError = require('../../Commons/exceptions/NotFoundError');
-const DetailComment = require('../../Domains/comments/entities/DetailComment');
 const DetailedThread = require('../../Domains/threads/entities/DetailedThread');
+const DetailComment = require('../../Domains/comments/entities/DetailComment');
+const DetailReplyComment = require('../../Domains/reply-comment/entities/DetailReplyComment');
 
 class GetDetailThreadUseCase {
   constructor({ 
     threadRepository,
+    userRepository,
     commentRepository,
+    replyCommentRepository
     }) {
     this._threadRepository = threadRepository;
+    this._userRepository = userRepository;
     this._commentRepository = commentRepository;
+    this._replyCommentRepository = replyCommentRepository;
   }
 
   async execute(threadId) {
     const getThread = await this._threadRepository.getThreadById(threadId);
 
-    if (getThread.length === 0) {
-        throw new NotFoundError('Thread tidak ditemukan')
+    const thread = new DetailedThread({
+      id: getThread.id,
+      title: getThread.title,
+      body: getThread.body,
+      date: getThread.date,
+      username: getThread.username,
+      comments: [],
+    })
+
+    const commentsInThread = await this._commentRepository.getCommentByThreadId(threadId);
+
+    if (commentsInThread.length > 0) {
+      const commentDetails = await Promise.all(
+        commentsInThread.map(async (comment) => {
+          const commentDetail = new DetailComment({
+            id: comment.id,
+            username: comment.username,
+            date: comment.date,
+            content: comment.content,
+            replies: [],
+            isDelete: comment.is_delete,
+          });
+          
+          const repliesInComment = await this._replyCommentRepository.getRepliesByCommentId(
+            comment.id,
+          );
+
+          if (repliesInComment.length > 0) {
+            const replyDetails = await Promise.all(
+              repliesInComment.map(
+                async (reply) => new DetailReplyComment({
+                  id: reply.id,
+                  content: reply.content,
+                  date: reply.date,
+                  username: reply.username,
+                  isDelete: reply.is_delete,
+                }),
+              ),
+            );
+
+            commentDetail.replies.push(...replyDetails);
+          }
+
+          return commentDetail;
+        }),
+      );
+
+      thread.comments.push(...commentDetails);
     }
 
-    const getCommentByThreadId = await this._commentRepository.getCommentByThreadId(threadId);
-
-    const comments = await Promise.all(getCommentByThreadId.map(async (comment) => ({
-        id: comment.id,
-        username: comment.username,
-        date: comment.date,
-        content: comment.is_delete ? '**Komentar sudah dihapus**' : comment.content,
-    })))
-
-    return new DetailedThread({
-        id: getThread[0].id,
-        title: getThread[0].title,
-        body: getThread[0].body,
-        date: getThread[0].date,
-        username: getThread[0].username,
-        comments,
-    });
+    return thread;
   }
 }
 
