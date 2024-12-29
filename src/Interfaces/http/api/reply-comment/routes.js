@@ -13,7 +13,7 @@ const routes = (handler) => ([
     handler: handler.deleteReplyByIdHandler,
     options: {
       auth: 'forumapi_jwt',
-    },    
+    },
   },
 ]);
 

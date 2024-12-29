@@ -6,7 +6,7 @@ describe('an AddThread entities', () => {
     const payload = {
       title: 'ini thread',
     };
- 
+
     // Action and Assert
     expect(() => new AddThread(payload)).toThrowError('ADD_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
   });

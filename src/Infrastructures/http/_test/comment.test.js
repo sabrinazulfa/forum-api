@@ -199,7 +199,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
     });
   });
 
-  describe('when DELETE /threads/{threadId}//comments/{commentId}', () => {
+  describe('when DELETE /threads/{threadId}/comments/{commentId}', () => {
     it('it should response 401 when authentiction is missing', async () => {
       const loginPayload = {
         username: 'dicoding',

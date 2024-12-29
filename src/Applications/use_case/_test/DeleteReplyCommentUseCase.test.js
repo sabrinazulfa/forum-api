@@ -5,17 +5,17 @@ describe('DeleteReplyCommentUseCase', () => {
   it('should orchestrating the delete reply action correctly', async () => {
     const mockReplyCommentRepository = new ReplyCommentRepository();
 
-    const mockReply = { 
+    const mockReply = {
       id: 'reply-123',
     };
     const mockComment = {
-      id: 'comment-123'
+      id: 'comment-123',
     };
-    const mockThread = { 
-      id: 'thread-123'
+    const mockThread = {
+      id: 'thread-123',
     };
     const mockUser = {
-      ownerId: 'user-123'
+      ownerId: 'user-123',
     };
 
     mockReplyCommentRepository.checkAvailableReply = jest
@@ -32,13 +32,13 @@ describe('DeleteReplyCommentUseCase', () => {
       replyCommentRepository: mockReplyCommentRepository,
     });
 
-    await deleteReplyUseCase.execute(   
+    await deleteReplyUseCase.execute(
       mockThread.id,
       mockComment.id,
       mockReply.id,
       mockUser.id,
     );
-    
+
     expect(mockReplyCommentRepository.checkAvailableReply).toBeCalledWith(
       mockReply.id,
     );

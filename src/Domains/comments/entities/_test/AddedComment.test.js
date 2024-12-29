@@ -5,10 +5,10 @@ describe('an AddedComment entities', () => {
     // Arrange
     const payload = {
       id: 'thread-123',
-      title:  'This is title',
+      title: 'This is title',
       user: 'dad',
     };
- 
+
     // Action and Assert
     expect(() => new AddedComment(payload)).toThrow(
       'ADDED_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY',

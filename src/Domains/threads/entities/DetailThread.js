@@ -2,7 +2,9 @@ class DetailThread {
   constructor(payload) {
     this._verifyPayload(payload);
 
-    const { id, title, body, date, username, comments } = payload;
+    const {
+      id, title, body, date, username, comments,
+    } = payload;
 
     this.id = id;
     this.title = title;
@@ -12,7 +14,7 @@ class DetailThread {
     this.comments = comments;
   }
 
-  _verifyPayload({ 
+  _verifyPayload({
     id, title, body, date, username, comments,
   }) {
     if (!id || !title || !body || !date || !username || !comments) {

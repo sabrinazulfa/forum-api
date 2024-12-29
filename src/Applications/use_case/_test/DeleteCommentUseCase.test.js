@@ -29,12 +29,12 @@ describe('DeleteCommentUseCase', () => {
       commentRepository: mockCommentRepository,
     });
 
-    await deleteCommentUseCase.execute({      
+    await deleteCommentUseCase.execute({
       commentId: mockComment.id,
       threadId: mockThread.id,
       ownerId: mockUser.ownerId,
     });
-    
+
     expect(mockCommentRepository.checkAvailableComment).toBeCalledWith(
       mockComment.id,
     );

@@ -7,7 +7,7 @@ describe('an AddedThread entities', () => {
       id: 'thread-123',
       title: 'This is title',
     };
- 
+
     // Action and Assert
     expect(() => new AddedThread(payload)).toThrow('ADDED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
   });

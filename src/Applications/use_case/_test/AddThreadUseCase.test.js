@@ -10,7 +10,7 @@ describe('AddThreadUseCase', () => {
       body: 'Recently Indonesia is in stage that defined by criticus on warning literation.',
     };
 
-    const mockUser = { 
+    const mockUser = {
       id: 'user-123',
     };
 

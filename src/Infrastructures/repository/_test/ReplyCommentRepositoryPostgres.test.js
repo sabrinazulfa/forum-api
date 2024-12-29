@@ -11,7 +11,6 @@ const AddReplyComment = require('../../../Domains/reply-comment/entities/AddRepl
 const ReplyCommentRepositoryPostgres = require('../ReplyCommentRepositoryPostgres');
 const AddedReplyComment = require('../../../Domains/reply-comment/entities/AddedReplyComment');
 
-
 describe('ReplyRepositoryPostgres', () => {
   const userId = 'user-123';
   const threadId = 'thread-123';

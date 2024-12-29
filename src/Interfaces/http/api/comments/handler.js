@@ -46,7 +46,7 @@ class CommentHandler {
     });
     response.code(200);
     return response;
-  } 
+  }
 }
 
 module.exports = CommentHandler;

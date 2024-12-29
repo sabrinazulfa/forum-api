@@ -3,7 +3,7 @@ class DetailComment {
     this._verifyPayload(payload);
 
     const {
-      id, username, date, content, replies
+      id, username, date, content, replies,
     } = this._remapPayload(payload);
 
     this.id = id;
@@ -13,10 +13,10 @@ class DetailComment {
     this.replies = replies;
   }
 
-  _verifyPayload({ 
-    id, username, date, content, replies = [], 
+  _verifyPayload({
+    id, username, date, content, replies = [],
   }) {
-    if (!id || !username || !date || !content || !!replies) {
+    if (!id || !username || !date || !content || !replies) {
       throw new Error('DETAIL_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
@@ -25,7 +25,7 @@ class DetailComment {
     }
   }
 
-  _remapPayload({ 
+  _remapPayload({
     id, username, date, content, replies = [], isDelete,
   }) {
     return {

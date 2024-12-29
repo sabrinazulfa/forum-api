@@ -11,13 +11,13 @@ describe('AddReplyCommentUseCase', () => {
       content: 'My reply',
     };
 
-    const mockThread = { 
+    const mockThread = {
       id: 'thread-123',
     };
-    const mockUser = { 
+    const mockUser = {
       id: 'user-123',
     };
-    const mockComment = { 
+    const mockComment = {
       id: 'comment-123',
     };
 
@@ -30,7 +30,7 @@ describe('AddReplyCommentUseCase', () => {
     const mockReplyCommentRepository = new ReplyCommentRepository();
     const mockCommentReposiotry = new CommentRepository();
     const mockThreadRepository = new ThreadRepository();
-    
+
     mockThreadRepository.checkAvailableThread = jest
       .fn()
       .mockImplementation(() => Promise.resolve());
@@ -62,8 +62,12 @@ describe('AddReplyCommentUseCase', () => {
       }),
     );
 
-    expect(mockThreadRepository.checkAvailableThread).toBeCalledWith(mockThread.id);
-    expect(mockCommentReposiotry.checkAvailableComment).toBeCalledWith(mockComment.id);
+    expect(mockThreadRepository.checkAvailableThread).toBeCalledWith(
+      mockThread.id,
+    );
+    expect(mockCommentReposiotry.checkAvailableComment).toBeCalledWith(
+      mockComment.id,
+    );
     expect(mockReplyCommentRepository.addReplyComment).toBeCalledWith(
       mockUser.id,
       mockComment.id,

@@ -29,7 +29,6 @@ exports.up = (pgm) => {
     },
   });
 
-
   pgm.addConstraint(
     'reply_comment',
     'fk_reply_comment.comment_id_comments.id',

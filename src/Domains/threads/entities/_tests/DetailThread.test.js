@@ -10,7 +10,7 @@ describe('an DetailThread entities', () => {
       date: '2024-12-12T12:11:04.346Z',
       username: 'user-456',
     };
- 
+
     // Action and Assert
     expect(() => new DetailThread(payload)).toThrow('DETAIL_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
   });
@@ -38,12 +38,12 @@ describe('an DetailThread entities', () => {
       body: 'Body of threads example.',
       date: '2024-12-12T12:11:04.346Z',
       username: 'user-456',
-      comments: []
+      comments: [],
     };
 
     // Action
-    const { 
-      id, title, body, date, username, comments
+    const {
+      id, title, body, date, username, comments,
     } = new DetailThread(
       payload,
     );

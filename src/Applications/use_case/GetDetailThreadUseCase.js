@@ -4,12 +4,12 @@ const DetailComment = require('../../Domains/comments/entities/DetailComment');
 const DetailReplyComment = require('../../Domains/reply-comment/entities/DetailReplyComment');
 
 class GetDetailThreadUseCase {
-  constructor({ 
+  constructor({
     threadRepository,
     userRepository,
     commentRepository,
-    replyCommentRepository
-    }) {
+    replyCommentRepository,
+  }) {
     this._threadRepository = threadRepository;
     this._userRepository = userRepository;
     this._commentRepository = commentRepository;
@@ -26,9 +26,11 @@ class GetDetailThreadUseCase {
       date: threadFromId.date,
       username: threadFromId.username,
       comments: [],
-    })
+    });
 
-    const commentsInThread = await this._commentRepository.getCommentByThreadId(threadId);
+    const commentsInThread = await this._commentRepository.getCommentByThreadId(
+      threadId,
+    );
 
     if (commentsInThread.length > 0) {
       const commentDetails = await Promise.all(
@@ -41,7 +43,7 @@ class GetDetailThreadUseCase {
             replies: [],
             isDelete: comment.is_delete,
           });
-          
+
           const repliesInComment = await this._replyCommentRepository.getRepliesByCommentId(
             comment.id,
           );

@@ -10,8 +10,12 @@ describe('AddCommentUseCase', () => {
       content: 'Nice article!',
     };
 
-    const mockThread = { id: 'thread-123' };
-    const mockUser = { id: 'user-123' };
+    const mockThread = {
+      id: 'thread-123',
+    };
+    const mockUser = {
+      id: 'user-123',
+    };
 
     const mockAddedComment = new AddedComment({
       id: 'comment-456',
@@ -48,7 +52,9 @@ describe('AddCommentUseCase', () => {
       }),
     );
 
-    expect(mockThreadRepository.checkAvailableThread).toBeCalledWith(mockThread.id);
+    expect(mockThreadRepository.checkAvailableThread).toBeCalledWith(
+      mockThread.id,
+    );
     expect(mockCommentReposiotry.addComment).toBeCalledWith(
       mockThread.id,
       mockUser.id,

@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-exports.up = pgm => {
+exports.up = (pgm) => {
   pgm.createTable('threads', {
     id: {
       type: 'VARCHAR(50)',
-      primaryKey: true,      
+      primaryKey: true,
     },
     title: {
       type: 'VARCHAR(50)',

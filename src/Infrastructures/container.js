@@ -187,7 +187,7 @@ container.register([
         {
           name: 'replyCommentRepository',
           internal: ReplyCommentRepository.name,
-        }
+        },
       ],
     },
   },

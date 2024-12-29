@@ -2,7 +2,7 @@ class ReplyDetailComment {
   constructor(payload) {
     this._verifyPayload(payload);
 
-    const { 
+    const {
       id, content, date, username,
     } = this._remapPayload(payload);
 
@@ -19,7 +19,7 @@ class ReplyDetailComment {
       throw new Error('REPLY_DETAIL.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
-    if ( typeof id !== 'string' || typeof content !== 'string' || typeof date !== 'string' || typeof username !== 'string' ) {
+    if (typeof id !== 'string' || typeof content !== 'string' || typeof date !== 'string' || typeof username !== 'string') {
       throw new Error('REPLY_DETAIL.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
